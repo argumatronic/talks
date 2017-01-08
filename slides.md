@@ -1,0 +1,226 @@
+% Applicative Parsing
+% Julie Moronuki
+% LambdaConf Winter Retreat
+% January 10, 2017
+
+# Hour 1: Applicative
+
+![Tie Fighter of Doom](vaders-tie-fighter.jpg)
+
+# Functor
+
+# Monad
+
+# partial application    
+- see here: https://www.schoolofhaskell.com/school/advanced-haskell/functors-applicative-functors-and-monads#partial-application 
+- but use example from whatever code you've been working on
+
+# Applicative  
+
+I have altered the Functor.
+Pray I do not alter it further.
+
+
+- less powerful than Monad  
+- the two functions must be independent, not relying on each other for outcome  
+- if you are gonna use the palindrome thing, then you'll need two parameters, not just one input string  
+- oh maybe do an anagram checker?
+
+# Applicatives vs Monads  
+- context  
+- composability (applicatives compose; monads need transformers)  
+
+# Examples of monadic code and applicative code  
+- Validation  
+  - gonna need good examples 
+  
+
+# Applicative Do
+
+# Parsing
+
+# Monadic parsing  
+- Parsec?
+
+# Alternative
+
+# Applicative parsing  
+- usually context free due to the independent outcomes quality
+- can also be used to parse context-sensitive grammars tho!  
+- do not address this - reference to Yorgey's post about it
+
+# Examples of monadic and applicative parsing  
+- context free and context sensitive
+
+# Hour 2: Electric Boogaloo
+
+In this hour, we'll be working on a small project with the optparse-applicative library.
+<!-- need to add instructions for Stack
+probably have a small project (simple) initialized so we can load it up with samples
+and also then clone the pprkpr repo, whatever we're going to call that
+consider making rmbrfeed, todolist into a cla as well
+ -->
+# Example
+
+## Options.Applicative.Builder
+
+Here are some basic argument types we can use: commands and flags.
+
+```haskell
+command :: String -> ParserInfo a -> Mod CommandFields a
+```
+
+Add a command to a subparser option.
+
+```haskell
+flag :: a  -> a -> Mod FlagFields a -> Parser a
+--     [1]   [2]         [3]              [4]
+```
+1. default value
+  
+2. active value
+
+3. option modifier
+  
+4. Builder for a flag parser.
+
+A flag that switches from a "default value" to an "active value" when encountered. For a simple boolean value, use switch instead.
+
+```haskell
+switch :: Mod FlagFields Bool -> Parser Bool
+
+switch = flag False True
+```
+
+
+
+subparser :: Mod CommandFields a -> Parser a
+
+Builder for a command parser. The command modifier can be used to specify individual commands.
+
+strArgument :: Mod ArgumentFields String -> Parser String
+
+Builder for a String argument.
+
+argument :: ReadM a -> Mod ArgumentFields a -> Parser a
+
+Builder for an argument parser.
+
+
+
+## information we can provide about our arguments
+
+short :: HasName f => Char -> Mod f a
+
+Specify a short name for an option.
+
+long :: HasName f => String -> Mod f a
+
+Specify a long name for an option.
+
+metavar :: HasMetavar f => String -> Mod f a
+
+Specify a metavariable for the argument.
+
+Metavariables have no effect on the actual parser, and only serve to specify the symbolic name for an argument to be displayed in the help text.
+
+
+## Options.Applicative.Extra
+
+execParser :: ParserInfo a -> IO a Source #
+
+Run a program description.
+
+Parse command line arguments. Display help text and exit if any parse error occurs.
+
+## let's start building a sample program
+
+import Options.Applicative
+
+data Opts = Opts
+    { optFlag :: !Bool
+    , optVal :: !String
+    }
+
+main :: IO ()
+main = do
+    opts <- execParser optsParser
+    putStrLn
+        (concat ["Hello, ", optVal opts, ", the flag is ", show (optFlag opts)])
+  where
+    optsParser =
+        info
+            (helper <*> versionOption <*> programOptions)
+            (fullDesc <> progDesc "optparse example" <>
+             header
+                 "optparse-example - a small example program for optparse-applicative")
+    versionOption = infoOption "0.0" (long "version" <> help "Show version")
+    programOptions =
+        Opts <$> switch (long "some-flag" <> help "Set the flag") <*>
+        strOption
+            (long "some-value" <> metavar "VALUE" <> value "default" <>
+             help "Override default name")
+
+Without arguments, this program outputs Hello, default! The flag is False. If you run this program with the --help argument
+
+-- data Opts = Opts { foo :: Bool, bar :: Bool } deriving Show
+
+-- parseOpts :: Parser Opts
+-- parseOpts = Opts <$> switch (long "foo" <> short 'f' <> help "Foo") <*> switch (long "bar" <> short 'b' <> help "Bar")
+
+-- parseInfoCom :: ParserInfo Command
+-- parseInfoCom = info parseCommand (progDesc "Give foo.")
+
+withInfo :: Parser a -> String -> ParserInfo a
+withInfo opts desc = info (helper <*> opts) $ progDesc desc
+
+-- parseCommand :: Parser Command
+-- parseCommand = subparser $
+--     command "foo" (parseOpts `withInfo` "Give me a foo")
+
+-- main :: IO ()
+-- main = do
+--     opts <- execParser parseInfoCom
+--     print opts
+
+module Main where
+
+import Options.Applicative
+
+-- import Lib
+
+data Command = Add String String   | 
+               Email String String |
+               Phone String String |
+               Show String  
+               deriving (Eq, Show)
+
+parserAdd :: Parser Command
+parserAdd = Add <$> strArgument (metavar "FILENAME") <*> strArgument (metavar "PERSON_NAME")
+
+parserEmail :: Parser Command
+parserEmail = Email <$> strArgument (metavar "FILENAME") <*> strArgument (metavar "EMAIL_ADDRESS")
+
+parserPhone :: Parser Command
+parserPhone = Phone <$> strArgument (metavar "FILENAME") <*> strArgument (metavar "PHONE_NUMBER")
+
+parserShow :: Parser Command
+parserShow = Show <$> strArgument (metavar "FILENAME")
+
+parserCommand :: Parser Command
+parserCommand = subparser $ 
+    command "add" (parserAdd `withInfo` "Add an entry.") <>
+    command "email" (parserEmail `withInfo` "Add email address.") <>
+    command "phone" (parserPhone `withInfo` "Add phone number.") <>
+    command "show" (parserShow `withInfo` "Show record.")
+
+parserInfoCommand :: ParserInfo Command
+parserInfoCommand = info parserCommand (progDesc "Manage address book.")
+
+main :: IO ()
+main = do
+    command <- execParser parserInfoCommand
+    print command
+
+withInfo :: Parser a -> String -> ParserInfo a
+withInfo opts desc = info (helper <*> opts) $ progDesc desc

@@ -1,2 +1,2 @@
 slides:
-	pandoc -t beamer -s wkshpSlides1.mdown -o applic.pdf
+	pandoc -t beamer -s slides.md -o slides.pdf
