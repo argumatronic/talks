@@ -17,11 +17,12 @@
 
 # Applicative  
 
+![Dog Vader](dog-vader.jpg)
+
 I have altered the Functor.
 Pray I do not alter it further.
 
-
-- less powerful than Monad  
+# Applicative
 - the two functions must be independent, not relying on each other for outcome  
 - if you are gonna use the palindrome thing, then you'll need two parameters, not just one input string  
 - oh maybe do an anagram checker?
@@ -62,6 +63,9 @@ consider making rmbrfeed, todolist into a cla as well
  -->
 # Example
 
+-- optex 
+-- stack exec optex
+
 ## Options.Applicative.Builder
 
 Here are some basic argument types we can use: commands and flags.
@@ -91,7 +95,7 @@ switch :: Mod FlagFields Bool -> Parser Bool
 
 switch = flag False True
 ```
-
+-- flagEx.hs
 
 
 subparser :: Mod CommandFields a -> Parser a
@@ -183,44 +187,4 @@ withInfo opts desc = info (helper <*> opts) $ progDesc desc
 --     opts <- execParser parseInfoCom
 --     print opts
 
-module Main where
-
-import Options.Applicative
-
--- import Lib
-
-data Command = Add String String   | 
-               Email String String |
-               Phone String String |
-               Show String  
-               deriving (Eq, Show)
-
-parserAdd :: Parser Command
-parserAdd = Add <$> strArgument (metavar "FILENAME") <*> strArgument (metavar "PERSON_NAME")
-
-parserEmail :: Parser Command
-parserEmail = Email <$> strArgument (metavar "FILENAME") <*> strArgument (metavar "EMAIL_ADDRESS")
-
-parserPhone :: Parser Command
-parserPhone = Phone <$> strArgument (metavar "FILENAME") <*> strArgument (metavar "PHONE_NUMBER")
-
-parserShow :: Parser Command
-parserShow = Show <$> strArgument (metavar "FILENAME")
-
-parserCommand :: Parser Command
-parserCommand = subparser $ 
-    command "add" (parserAdd `withInfo` "Add an entry.") <>
-    command "email" (parserEmail `withInfo` "Add email address.") <>
-    command "phone" (parserPhone `withInfo` "Add phone number.") <>
-    command "show" (parserShow `withInfo` "Show record.")
-
-parserInfoCommand :: ParserInfo Command
-parserInfoCommand = info parserCommand (progDesc "Manage address book.")
-
-main :: IO ()
-main = do
-    command <- execParser parserInfoCommand
-    print command
-
-withInfo :: Parser a -> String -> ParserInfo a
-withInfo opts desc = info (helper <*> opts) $ progDesc desc
+# Start working on address

@@ -3,24 +3,24 @@
 
 module Main where
 
-import Options.Applicative as O
+import Options.Applicative as Opt
 import Data.Semigroup ((<>))
 -- import Control.Monad (replicateM_)
 import Data.Char
 
--- data Welcome = Welcome { name :: String }
+data Welcome = Welcome { name :: String }
 
--- runWithOptions :: Welcome -> IO ()
--- runWithOptions opts =
---   putStrLn ("Enjoy the snow, " ++ name opts ++ "!")
+runWithOptions :: Welcome -> IO ()
+runWithOptions opts =
+  putStrLn ("Enjoy the snow, " ++ name opts ++ "!")
 
--- main :: IO ()
--- main = execParser opts >>= runWithOptions
---  -- execParser :: ParserInfo a -> IO a
---   where
---     parser = Welcome <$> argument str (metavar "NAME")
---     opts = info parser mempty
- -- info :: Parser a -> InfoMod a -> ParserInfo a
+main :: IO ()
+main = execParser opts >>= runWithOptions
+ -- execParser :: ParserInfo a -> IO a
+  where
+    parser = Welcome <$> argument str (metavar "NAME")
+    opts = info parser mempty
+ info :: Parser a -> InfoMod a -> ParserInfo a
 
 -- stack exec optex
 -- stack exec optex NAME
@@ -29,30 +29,30 @@ import Data.Char
 
 
 
-data Welcome = Welcome { name :: String
-                       , excited :: Bool
-                       }
+-- data Welcome = Welcome { name :: String
+--                        , excited :: Bool
+--                        }
 
--- notice that a switch is a Bool type
+-- -- notice that a switch is a Bool type
 
-runWithOptions :: Welcome -> IO ()
-runWithOptions opts =
-  putStrLn $ transform $
-    "Enjoy the snow, " ++ name opts ++ "!"
+-- runWithOptions :: Welcome -> IO ()
+-- runWithOptions opts =
+--   putStrLn $ transform $
+--     "Enjoy the snow, " ++ name opts ++ "!"
 
-  where
-    transform = if excited opts then map toUpper else id
--- add the where clause to handle what to do if the options change
+--   where
+--     transform = if excited opts then map toUpper else id
+-- -- add the where clause to handle what to do if the options change
 
-main :: IO ()
-main = execParser opts >>= runWithOptions
-  where
-    parser = Welcome <$> argument str (metavar "NAME")
-                     <*> switch (short 'e' O.<>
-                               long "excited" O.<>
-                               help "Run in excited mode.")
-    opts = info parser mempty
+-- main :: IO ()
+-- main = execParser opts >>= runWithOptions
+--   where
+--     parser = Welcome <$> argument str (metavar "NAME")
+--                      <*> switch (short 'e' Opt.<>
+--                                long "excited" Opt.<>
+--                                help "Run in excited mode.")
+--     opts = info parser mempty
 
--- have an argument str -- the metavar allows it to provide usage information to us
+-- -- have an argument str -- the metavar allows it to provide usage information to us
 
--- stack exec -- optex Julie -e
+-- -- stack exec -- optex Julie -e
