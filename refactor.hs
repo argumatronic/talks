@@ -1,0 +1,2 @@
+-- use the palindrome checker, or the anagram checker
+-- successively refactor a la Snoyman
