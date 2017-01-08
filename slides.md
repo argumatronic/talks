@@ -1,6 +1,5 @@
 % Applicative Parsing
 % Julie Moronuki
-% LambdaConf Winter Retreat
 % January 10, 2017
 
 # Hour 1: Applicative
@@ -17,7 +16,7 @@
 
 # Applicative  
 
-![Dog Vader](dog-vader.jpg)
+![I have altered the Functor.](dog-vader.jpg)
 
 I have altered the Functor.
 Pray I do not alter it further.
