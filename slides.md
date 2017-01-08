@@ -27,12 +27,15 @@ Pray I do not alter it further.
 - oh maybe do an anagram checker?
 
 # Applicatives vs Monads  
-- context  
+- context sensitivity 
 - composability (applicatives compose; monads need transformers)  
+- parallelism vs sequence
 
 # Examples of monadic code and applicative code  
-- Validation  
-  - gonna need good examples 
+- AccValidation  
+  - example
+
+# AccValidation can't be a Monad 
   
 
 # Applicative Do
@@ -136,7 +139,9 @@ Run a program description.
 
 Parse command line arguments. Display help text and exit if any parse error occurs.
 
-## let's start building a sample program
+## a sample program
+
+https://haskell-lang.org/library/optparse-applicative
 
 import Options.Applicative
 
