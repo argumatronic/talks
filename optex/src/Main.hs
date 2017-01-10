@@ -20,7 +20,7 @@ main = execParser opts >>= runWithOptions
   where
     parser = Welcome <$> argument str (metavar "NAME")
     opts = info parser mempty
- info :: Parser a -> InfoMod a -> ParserInfo a
+--  info :: Parser a -> InfoMod a -> ParserInfo a
 
 -- stack exec optex
 -- stack exec optex NAME

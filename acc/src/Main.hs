@@ -1,24 +1,27 @@
+module Main where
+
 import Data.List (null, sort)
+import Data.Char (isAlpha)
 import Data.Validation
 
 isAnagram :: String -> String -> Bool
 isAnagram xs ys = sort xs == sort ys
 
-maybeWord :: String -> Maybe String
+maybeWord :: String -> AccValidation [String] String
 maybeWord xs = 
     case null xs of
-        True -> Nothing
+        True -> AccFailure ["Empty string."]
         False -> do
             case (all isAlpha xs) of
-                False -> Nothing
-                True -> Just xs
+                False -> AccFailure ["This is not a word."]
+                True -> AccSuccess xs
 
-display :: Maybe Bool -> IO ()
-display maybeAna =
-    case maybeAna of
-        Nothing    -> putStrLn "This is not valid input."
-        Just False -> putStrLn "These are not anagrams."
-        Just True  -> putStrLn "These words are anagrams."
+display :: AccValidation [String] Bool -> IO ()
+display validAna =
+    case validAna of
+        AccFailure err   -> putStrLn (concat err)
+        AccSuccess False -> putStrLn "These are not anagrams."
+        AccSuccess True  -> putStrLn "These words are anagrams."
 
 
 main :: IO ()
@@ -27,16 +30,23 @@ main = do
     firstWord <- getLine
     putStrLn "Please enter a second word."
     secondWord <- getLine
-    let maybeAna = do
-            first  <- maybeWord firstWord
-            second <- maybeWord secondWord
-            return $ isAnagram first second
-    display maybeAna
+    let validAna = isAnagram 
+                   <$> (maybeWord firstWord) 
+                   <*> (maybeWord secondWord)
+    display validAna
 
-
-
-
-
+-- does not work because no Monad instance
+-- main :: IO ()
+-- main = do
+--     putStrLn "Please enter a word."
+--     firstWord <- getLine
+--     putStrLn "Please enter a second word."
+--     secondWord <- getLine
+--     let validAna = do
+--             first  <- maybeWord firstWord
+--             second <- maybeWord secondWord
+--             return $ isAnagram first second
+--     display validAna
 
 
 

@@ -18,12 +18,6 @@ fmap :: (a -> b) -> f a -> f b
 
 - but the `(a -> b)` of `fmap` has become an `(a -> f b)`
 
-# Join
-
-```haskell
-join :: Monad m => m (m a) -> m a
-```
-
 # fmap vs bind
 
 ```haskell
@@ -31,6 +25,13 @@ fmap :: Functor f => (a -> b) -> f a -> f b
 
 (>>=) :: Monad m  => m a -> (a -> m b) -> m b
 ```
+
+# Join
+
+```haskell
+join :: Monad m => m (m a) -> m a
+```
+
 # Sequencing
 
 - <read in book, how it depends on one thing (the m a?) to even know if the function will be applied
@@ -50,7 +51,6 @@ Pray I do not alter it further.
 - the two functions must be independent, not relying on each other for outcome  
 - does not generate extra structure
 - function application does not depend on result of earlier computation
-
 
 # Applicatives vs Monads  
 - context sensitivity 
