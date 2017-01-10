@@ -8,23 +8,49 @@
 
 # Functor
 
+```haskell
+fmap :: (a -> b) -> f a -> f b
+```
+
 # Monad
 
-# partial application    
-- see here: https://www.schoolofhaskell.com/school/advanced-haskell/functors-applicative-functors-and-monads#partial-application 
-- but use example from whatever code you've been working on
+- ... is a kind of functor.
+
+- but the `(a -> b)` of `fmap` has become an `(a -> f b)`
+
+# Join
+
+```haskell
+join :: Monad m => m (m a) -> m a
+```
+
+# fmap vs bind
+
+```haskell
+fmap :: Functor f => (a -> b) -> f a -> f b
+
+(>>=) :: Monad m  => m a -> (a -> m b) -> m b
+```
+# Sequencing
+
+- <read in book, how it depends on one thing (the m a?) to even know if the function will be applied
+- with effectful code, sequencing is good
 
 # Applicative  
 
 ![I have altered the Functor.](dog-vader.jpg)
 
-I have altered the Functor.
 Pray I do not alter it further.
 
 # Applicative
+
+```haskell
+(<*>) :: Applicative f => f (a -> b) -> f a -> f b
+```
 - the two functions must be independent, not relying on each other for outcome  
-- if you are gonna use the palindrome thing, then you'll need two parameters, not just one input string  
-- oh maybe do an anagram checker?
+- does not generate extra structure
+- function application does not depend on result of earlier computation
+
 
 # Applicatives vs Monads  
 - context sensitivity 
