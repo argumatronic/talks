@@ -4,7 +4,35 @@ And we have Monad, which is a type of functor. But in this case, the function be
 
 <code: refactor.hs>
 
-So, with Applicative, it's also a sort of functor. It's also lifting a function into a structured context -- or applying a function to the value(s) inside the container. But in this case, the function itself is wrapped (in contrast to fmap). In contrast to bind, it does not itself generate any new layer of structure. In fact, here the "structure" part of the operation gets monoidally appended. We can look at that in more detail another time.
+So, with Applicative, it's also a sort of functor. It's also lifting a function into a structured context -- or applying a function to the value(s) inside the container. But in this case, the function itself is wrapped (in contrast to fmap). In contrast to bind, it does not itself generate any new layer of structure. In fact, here the "structure" part of the operation gets monoidally appended. 
 
+<code: refactor.hs>
 
+# Sequencing
 
+- <read in book, how it depends on one thing (the m a?) to even know if the function will be applied
+- with effectful code, sequencing is good
+
+# Applicative
+- the two functions must be independent, not relying on each other for outcome  
+- does not generate extra structure
+- function application does not depend on result of earlier computation
+
+# Examples of monadic code and applicative code 
+<code: acc> 
+
+# AccValidation can't be a Monad 
+  
+
+# Applicative Do
+
+# Parsing
+
+# Monadic parsing  
+- Parsec?
+
+# Applicative parsing  
+- usually context free due to the independent outcomes quality
+
+# Examples of monadic and applicative parsing  
+- context free and context sensitive

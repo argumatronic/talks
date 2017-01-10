@@ -20,6 +20,9 @@ parserPhone = Phone <$> strArgument (metavar "FILENAME") <*> strArgument (metava
 parserShow :: Parser Command
 parserShow = Show <$> strArgument (metavar "FILENAME")
 
+withInfo :: Parser a -> String -> ParserInfo a
+withInfo opts desc = info (helper <*> opts) $ progDesc desc
+
 parserCommand :: Parser Command
 parserCommand = subparser $ 
     command "add" (parserAdd `withInfo` "Add an entry.") <>
@@ -35,5 +38,6 @@ main = do
     command <- execParser parserInfoCommand
     print command
 
-withInfo :: Parser a -> String -> ParserInfo a
-withInfo opts desc = info (helper <*> opts) $ progDesc desc
+
+
+-- stack exec -- address show julie

@@ -1,7 +1,7 @@
-module Main where
+-- module Main where
   
 import Data.Char (isAlpha)
-import Data.List (null, sort)
+import Data.List (sort)
 
 isAnagram :: String -> String -> Bool
 isAnagram xs ys = sort xs == sort ys
@@ -39,6 +39,11 @@ main = do
 
 
 
+
+
+
+
+
 -- main :: IO ()
 -- main = do
 --     putStrLn "Please enter a word."
@@ -49,3 +54,13 @@ main = do
 --                    <$> (maybeWord firstWord) 
 --                    <*> (maybeWord secondWord)
 --     display maybeAna
+
+-- main :: IO ()
+-- main = do
+--     putStrLn "Please enter a word."
+--     firstWord <- getLine
+--     putStrLn "Please enter a second word."
+--     secondWord <- getLine
+--     display (isAnagram <$> (maybeWord firstWord) <*> (maybeWord secondWord))
+
+

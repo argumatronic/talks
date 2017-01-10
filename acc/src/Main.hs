@@ -45,7 +45,7 @@ main = do
 --     let validAna = do
 --             first  <- maybeWord firstWord
 --             second <- maybeWord secondWord
---             return $ isAnagram first second
+--             pure $ isAnagram first second
 --     display validAna
 
 

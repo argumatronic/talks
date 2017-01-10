@@ -5,7 +5,6 @@ module Main where
 
 import Options.Applicative as Opt
 import Data.Semigroup ((<>))
--- import Control.Monad (replicateM_)
 import Data.Char
 
 data Welcome = Welcome { name :: String }
@@ -22,8 +21,13 @@ main = execParser opts >>= runWithOptions
     opts = info parser mempty
 --  info :: Parser a -> InfoMod a -> ParserInfo a
 
--- stack exec optex
--- stack exec optex NAME
+
+
+
+
+
+
+
 
 
 
