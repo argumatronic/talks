@@ -24,29 +24,29 @@ display validAna =
         AccSuccess True  -> putStrLn "These words are anagrams."
 
 
-main :: IO ()
-main = do
-    putStrLn "Please enter a word."
-    firstWord <- getLine
-    putStrLn "Please enter a second word."
-    secondWord <- getLine
-    let validAna = isAnagram 
-                   <$> (maybeWord firstWord) 
-                   <*> (maybeWord secondWord)
-    display validAna
-
--- does not work because no Monad instance
 -- main :: IO ()
 -- main = do
 --     putStrLn "Please enter a word."
 --     firstWord <- getLine
 --     putStrLn "Please enter a second word."
 --     secondWord <- getLine
---     let validAna = do
---             first  <- maybeWord firstWord
---             second <- maybeWord secondWord
---             pure $ isAnagram first second
+--     let validAna = isAnagram 
+--                    <$> (maybeWord firstWord) 
+--                    <*> (maybeWord secondWord)
 --     display validAna
+
+-- does not work because no Monad instance
+main :: IO ()
+main = do
+    putStrLn "Please enter a word."
+    firstWord <- getLine
+    putStrLn "Please enter a second word."
+    secondWord <- getLine
+    let validAna = do
+            first  <- maybeWord firstWord
+            second <- maybeWord secondWord
+            pure $ isAnagram first second
+    display validAna
 
 
 

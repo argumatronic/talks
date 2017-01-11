@@ -105,7 +105,7 @@ In this hour, we'll be working on a small project with the optparse-applicative 
 # Example
 
 -- stack new optex simple  
--- stack exec optex
+
 
 # Options.Applicative.Builder
 

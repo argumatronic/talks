@@ -23,44 +23,44 @@ display maybeAna =
         Just True  -> putStrLn "These words are anagrams."
 
 
+-- main :: IO ()
+-- main = do
+--     putStrLn "Please enter a word."
+--     firstWord <- getLine
+--     putStrLn "Please enter a second word."
+--     secondWord <- getLine
+--     let maybeAna = do
+--             first  <- maybeWord firstWord
+--             second <- maybeWord secondWord
+--             return $ isAnagram first second
+--     display maybeAna
+
+
+
+
+
+
+
+
+
+
 main :: IO ()
 main = do
     putStrLn "Please enter a word."
     firstWord <- getLine
     putStrLn "Please enter a second word."
     secondWord <- getLine
-    let maybeAna = do
-            first  <- maybeWord firstWord
-            second <- maybeWord secondWord
-            return $ isAnagram first second
+    let maybeAna = isAnagram 
+                   <$> (maybeWord firstWord) 
+                   <*> (maybeWord secondWord)
     display maybeAna
 
-
-
-
-
-
-
-
-
-
--- main :: IO ()
--- main = do
---     putStrLn "Please enter a word."
---     firstWord <- getLine
---     putStrLn "Please enter a second word."
---     secondWord <- getLine
---     let maybeAna = isAnagram 
---                    <$> (maybeWord firstWord) 
---                    <*> (maybeWord secondWord)
---     display maybeAna
-
--- main :: IO ()
--- main = do
---     putStrLn "Please enter a word."
---     firstWord <- getLine
---     putStrLn "Please enter a second word."
---     secondWord <- getLine
---     display (isAnagram <$> (maybeWord firstWord) <*> (maybeWord secondWord))
+main :: IO ()
+main = do
+    putStrLn "Please enter a word."
+    firstWord <- getLine
+    putStrLn "Please enter a second word."
+    secondWord <- getLine
+    display (isAnagram <$> (maybeWord firstWord) <*> (maybeWord secondWord))
 
 

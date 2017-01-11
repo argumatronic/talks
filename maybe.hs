@@ -12,7 +12,6 @@ noNegative :: Int -> Maybe Int
 noNegative n | n >= 0 = Just n
              | otherwise = Nothing
 
--- if Person's age is >18, pl must be Haskell
 plCheck :: Person -> Maybe Person
 plCheck c =
   let p = pl c
