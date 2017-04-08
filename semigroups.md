@@ -22,6 +22,11 @@
 
 # Some semigroups  
 - `NonEmpty` lists under concatenation 
+
+```haskell
+λ> (2 :| [3, 4]) <> (5 :| [6, 7])
+2 :| [3,4,5,6,7]
+```
 - the set of positive integers (no zero) under addition  
 - the set of integers with `minimum`/`maximum`
 
@@ -42,18 +47,69 @@ Math.min() < Math.max() => false
 - Why does it return false?  
 - Haskell throws an exception instead.
 - You can write Haskell that does a similar thing as the JS, changing it to a monoidal fold. 
+https://gist.github.com/chris-martin/a4a69d1f938ffcda0a738419311d4431
 
 - the tuple applicative:
-```Haskell
+```haskell
 λ> ("hello ", (+8)) <*> ("julie", 14)
 ("hello julie",22)
 ```
 - the behavior of the fst values in the tuples is determined by the `Monoid` constraint. 
 
 ```haskell
+data (,) a b = (,) a b
+
+instance Monoid a => Applicative ((,) a) where
+    pure b = (mempty, b)
+    (a, f) <*> (a', b) = (a `mappend` a', f b)
+```
 
 
+# Patterns
 
+- boolean algebra, set theory are connected; some set theory operations are analogs of arithmetic operations
+
+- conjunction 
+
+|       | False | True  |
+|-------|-------|-------|
+| False | False | False |
+| True  | False | True  |
+
+- disjunction
+
+|       | False | True  |
+|-------|-------|-------|
+| False | False | True  |
+| True  | True  | True  |
+
+
+# But what if it's `Maybe`?
+
+- conjunction 
+
+|         | Nothing | Just a  |
+|---------|---------|---------|
+| Nothing | Nothing | Nothing |
+| Just a  | Nothing | Just a  |
+
+- the `Just a` could be a choice of one or a combination of the two `a` values
+- error propagating: possibly this isn't what you want
+- but it is what you get in the `Maybe` applicative!
+
+```haskell
+λ> Just (*8) <*> Nothing
+Nothing
+```
+
+- disjunction
+
+|         | Nothing | Just a  |
+|---------|---------|---------|
+| Nothing | Nothing | Just a  |
+| Just a  | Just a  | Just a  |
+
+- error correcting: this is more typically what we want from a `Maybe` monoid
 
 
 
