@@ -1,11 +1,9 @@
 # Introduction to Monoids!  
-#### Bayhac
-#### April 8. 2017
-#### Julie Moronuki
+#### Bayhac, April 8. 2017
 
 # Well, actually  
 
-- We're mostly going to be talking about semigroups.    
+- We're going to be talking about semigroups a lot.    
 - We're not going to concern ourselves much with the typeclasses in Haskell but try to understand the concepts themselves.
 
 # What is a semigroup?  
