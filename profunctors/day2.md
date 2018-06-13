@@ -678,14 +678,14 @@ bimap @(,) :: (a -> b) -> (c -> d) ->
 ```haskell
 greet = bimap ("hello " ++) ("goodbye " ++)
 
-greet (Left "Julie")
-"hello Julie"
+λ> greet (Left "Julie")
+Left "hello Julie"
 
-greet (Right "to all that")
-"goodbye to all that"
+λ> greet (Right "to all that")
+Right "goodbye to all that"
 
-greet ("Poland", "Switzerland")
-greet ("hello Poland", "goodbye Switzerland")
+λ> greet ("Poland", "Switzerland")
+("hello Poland","goodbye Switzerland")
 ```
 
 # Tomorrow

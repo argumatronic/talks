@@ -8,3 +8,6 @@ nix-shell \
   --packages 'texlive.combine { inherit (texlive) scheme-medium beamer beamertheme-metropolis pgfopts upquote; }' \
   --run 'pandoc -t beamer --pdf-engine=xelatex -V theme=metropolis day2.md -o day2.pdf'
 
+nix-shell \
+  --packages 'texlive.combine { inherit (texlive) scheme-medium beamer beamertheme-metropolis pgfopts upquote; }' \
+  --run 'pandoc -t beamer --pdf-engine=xelatex -V theme=metropolis day3.md -o day3.pdf'
