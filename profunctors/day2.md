@@ -228,7 +228,7 @@ It's still an `a -> b` function but the `b` here is more function:
 
 # Aside
 
-(we don't need those parentheses because Haskell is *curried by default*)
+(we don't need those parentheses because of the right associativity of the arrow)
 
 
 # Another aside
